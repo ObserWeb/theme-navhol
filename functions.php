@@ -120,7 +120,7 @@ function twentyeleven_setup() {
 	// The height and width of your custom header.
 	// Add a filter to twentyeleven_header_image_width and twentyeleven_header_image_height to change these values.
 	define( 'HEADER_IMAGE_WIDTH', apply_filters( 'twentyeleven_header_image_width', 1000 ) );
-	define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'twentyeleven_header_image_height', 288 ) );
+	define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'twentyeleven_header_image_height', 125 ) );
 
 	// We'll be using post thumbnails for custom header images on posts and pages.
 	// We want them to be the size of the header image that we just defined
@@ -324,7 +324,7 @@ add_filter( 'excerpt_length', 'twentyeleven_excerpt_length' );
  * Returns a "Continue Reading" link for excerpts
  */
 function twentyeleven_continue_reading_link() {
-	return ' <a href="'. esc_url( get_permalink() ) . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyeleven' ) . '</a>';
+	return ' <a href="'. esc_url( get_permalink() ) . '" target="_blank">' . __( 'Siga leyendo <span class="meta-nav">&rarr;</span>', 'twentyeleven' ) . '</a>';
 }
 
 /**
@@ -613,37 +613,28 @@ function get_curr_tags_array(){
 function wp_holistic_nav( $args = '' ) {
 
         $currtags_array = get_curr_tags_array(); //etiquetas activas
-  
-        $defaults = array(
-                'smallest' => 8, 'largest' => 22, 'unit' => 'pt', 'number' => 500,
-                'format' => 'flat', 'separator' => "\n", 'orderby' => 'name', 'order' => 'ASC',
-                'exclude' => '', 'include' => '', 'taxonomy' => 'post_tag', 'echo' => true,
-                'semantics' => 'add'
-        );
-
 	$tags = get_terms('post_tag');
-
-        if ( empty( $tags ) || is_wp_error( $tags ) )
+	if ( empty( $tags ) || is_wp_error( $tags ) )
                 return;
 
-	$redtags = array();
-	$orangetags = array();
 	$greentags = array();
+	$orangetags = array();
+	$redtags = array();
 
         foreach ( $tags as $key => $tag ) {
                 $tagarr = $currtags_array;
                 $dkey = array_search($tag->term_id, $tagarr);
                 if ($dkey!== FALSE) { 
                         unset($tagarr[$dkey]); //se saca la etiqueta, si activa; para preparar el $tag[$key]->link que gatilla la próxima iteracion.
-			 $redtags[] = $tag; // pasa a ser "activa"
+			 $greentags[] = $tag; // pasa a ser "activa"
                 }
                 else {
                         $tagarr = array_merge($tagarr, array($tag->term_id)); //así que este array tiene las activas más la agregada
-			 $greentags[] = $tag; // pasa a ser "inactiva"
+			 $redtags[] = $tag; // pasa a ser "inactiva"
                 }
 
-// en vez de trabajar con la copia-partición ($redtags,$greentags) de $tags, también se hubiera podido
-// apartar $actags de $tags --los correspondientes a $redtags---; de tal manera que el $tags restante corresponda a $greentags
+// en vez de trabajar con la copia-partición ($greentags,$redtags) de $tags, también se hubiera podido
+// apartar $actags de $tags --los correspondientes a $greentags---; de tal manera que el $tags restante corresponda a $redtags
 
         $taglist = implode(",", $tagarr);
         $link = add_query_arg( "tags", $taglist );
@@ -659,11 +650,11 @@ function wp_holistic_nav( $args = '' ) {
 
 // Aquí se genera la lista Y de las etiquetas activas
 
-        $activated = wp_generate_tag_cloud( $redtags,"smallest=14&largest=14&format=list"); 
+        $activated = wp_generate_tag_cloud( $greentags,"smallest=14&largest=14&format=list"); 
 
 // Y desde aquí, la nube de las inactivas que cortan el conjunto \alpha(Y) de los post aún activos
         
-// nuevo mecanismo para definir el tamaño de los tags inactivos
+// mecanismo para definir el tamaño de los tags inactivos
   $time_start = microtime(true);
 
   global $wpdb;
@@ -677,8 +668,6 @@ function wp_holistic_nav( $args = '' ) {
   
   foreach ( $postags as $p ) 
   {
-          //echo $p->post_id;
-        //echo $p->tag_id;
         $tags_posts[$p->tag_id][] = $p->post_id; // arreglo "punteros" de tag a arreglo de posts etiquetados: \alpha(tag)
         $posts_tags[$p->post_id][] = $p->tag_id; // arreglo "punteros" de post a arreglo de tags que lo etiquetan: \beta(post)
   }
@@ -706,12 +695,12 @@ function wp_holistic_nav( $args = '' ) {
           }
   }
 
-  foreach ($greentags  as $key => $tag ) { 
+  foreach ($redtags  as $key => $tag ) { 
     $c = $tagsize[$tag->term_id];
     $tag->count = $c;
-    if($c == 0) unset($greentags[$key]);
+    if($c == 0) unset($redtags[$key]);
     if($c == $cardinality) {
-    $orangetags[] = $tag; unset($greentags[$key]);   // sólo nos quedamos con las etiquetas que "realmente cortan" \alpha(Y) 
+    $orangetags[] = $tag; unset($redtags[$key]);   // sólo nos quedamos con las etiquetas que "realmente cortan" \alpha(Y) 
     }
   }
 
@@ -721,7 +710,7 @@ function wp_holistic_nav( $args = '' ) {
 //  echo "New loop count took $time seconds\n";
 
 	$implied = wp_generate_tag_cloud( $orangetags,"smallest=14&largest=14&format=list");
-        $cutting = wp_generate_tag_cloud( $greentags,"smallest=8&largest=16"); 
+        $cutting = wp_generate_tag_cloud( $redtags,"smallest=8&largest=16"); 
 
 	$return = array("activated" => $activated,"cardinality" => $cardinality,"implied" => $implied,"cutting" => $cutting);
 	return $return;

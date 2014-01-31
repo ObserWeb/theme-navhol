@@ -1,14 +1,13 @@
 /*
-Theme Name: Twenty Eleven + ObserWeb Navegacion
-Theme URI: http://wordpress.org/themes/twentyeleven
-Author: the WordPress team + ObserWeb team
+Theme Name: Twenty Eleven
+Theme URI: http://wordpress.org/extend/themes/twentyeleven
+Author: the WordPress team
 Author URI: http://wordpress.org/
 Description: The 2011 theme for WordPress is sophisticated, lightweight, and adaptable. Make it yours with a custom menu, header image, and background -- then go further with available theme options for light or dark color scheme, custom link colors, and three layout choices. Twenty Eleven comes equipped with a Showcase page template that transforms your front page into a showcase to show off your best content, widget support galore (sidebar, three footer areas, and a Showcase page widget area), and a custom "Ephemera" widget to display your Aside, Link, Quote, or Status posts. Included are styles for print and for the admin editor, support for featured images (as custom header images on posts and pages and as large images on featured "sticky" posts), and special styles for six different post formats.
-Version: 1.6
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Tags: dark, light, white, black, gray, one-column, two-columns, left-sidebar, right-sidebar, fixed-width, flexible-width, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-image-header, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
-Text Domain: twentyeleven
+Version: 1.3
+License: GNU General Public License
+License URI: license.txt
+Tags: dark, light, white, black, gray, one-column, two-columns, left-sidebar, right-sidebar, fixed-width, flexible-width, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-image-header, featured-images, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
 */
 
 /* =Reset default browser CSS. Based on work by Eric Meyer: http://meyerweb.com/eric/tools/css/reset/index.html
@@ -340,7 +339,7 @@ hr {
 
 /* Text elements */
 p {
-	margin-bottom: 1.625em;
+	margin-bottom: .625em;
 }
 ul, ol {
 	margin: 0 0 1.625em 2.5em;
@@ -402,7 +401,7 @@ pre {
 	overflow: auto;
 	padding: 0.75em 1.625em;
 }
-code, kbd, samp, var {
+code, kbd {
 	font: 13px Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
 }
 abbr, acronym, dfn {
@@ -431,16 +430,10 @@ sup {
 sub {
 	top: .5ex;
 }
-small {
-	font-size: smaller;
-}
 
 /* Forms */
 input[type=text],
 input[type=password],
-input[type=email],
-input[type=url],
-input[type=number],
 textarea {
 	background: #fafafa;
 	-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
@@ -450,10 +443,6 @@ textarea {
 	color: #888;
 }
 input[type=text]:focus,
-input[type=password]:focus,
-input[type=email]:focus,
-input[type=url]:focus,
-input[type=number]:focus,
 textarea:focus {
 	color: #373737;
 }
@@ -461,11 +450,7 @@ textarea {
 	padding-left: 3px;
 	width: 98%;
 }
-input[type=text],
-input[type=password],
-input[type=email],
-input[type=url],
-input[type=number] {
+input[type=text] {
 	padding: 3px;
 }
 input#s {
@@ -489,6 +474,7 @@ a {
 a:focus,
 a:active,
 a:hover {
+  	color: #1982d1;
 	text-decoration: underline;
 }
 
@@ -498,6 +484,7 @@ a:hover {
 	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
 	clip: rect(1px, 1px, 1px, 1px);
 }
+#access a.assistive-text:active,
 #access a.assistive-text:focus {
 	background: #eee;
 	border-bottom: 1px solid #ddd;
@@ -522,10 +509,12 @@ a:hover {
 }
 #site-title {
 	margin-right: 270px;
-	padding: 3.65625em 0 0;
+	padding-bottom: 0;
+padding-left: 0;
+padding-right: 0;
+padding-top: 1.65625em;
 }
 #site-title a {
-	color: #111;
 	font-size: 30px;
 	font-weight: bold;
 	line-height: 36px;
@@ -534,19 +523,31 @@ a:hover {
 #site-title a:hover,
 #site-title a:focus,
 #site-title a:active {
-	color: #1982d1;
-}
-#site-description {
-	color: #7a7a7a;
-	font-size: 14px;
-	margin: 0 270px 3.65625em 0;
-}
-#branding img {
-	height: auto;
-	display: block;
-	width: 100%;
+  	text-decoration: underline;
 }
 
+#site-description {
+	color: #003200;
+	font-size: 14px;
+margin-bottom: 0.65625em;
+margin-left: 0;
+margin-right: 270px;
+margin-top: 0;
+}
+
+#branding img {
+height: 100px;
+margin-bottom: -7px;
+width: 100%;
+}
+
+#branding #searchform {
+display: none;
+position: absolute;
+right: 7.6%;
+text-align: right;
+top: 3.8em;
+}
 
 /* =Menu
 -------------------------------------------------------------- */
@@ -696,7 +697,7 @@ a:hover {
 
 #main {
 	clear: both;
-	padding: 1.625em 0 0;
+	padding: 0.625em  0 0;
 }
 .page-title {
 	color: #666;
@@ -717,7 +718,7 @@ a:hover {
 .no-results {
 	border-bottom: 1px solid #ddd;
 	margin: 0 0 1.625em;
-	padding: 0 0 1.625em;
+	padding: 0 0 0;
 	position: relative;
 }
 .hentry:last-child,
@@ -736,21 +737,22 @@ a:hover {
 .entry-title {
 	clear: both;
 	color: #222;
-	font-size: 16px;
+	font-size: 26px;
 	font-weight: bold;
 	line-height: 1.5em;
-	padding-bottom: .3em;
-	padding-top: 15px;
+	padding-bottom: 0;
+	padding-top: 0px;
 }
 .entry-title,
 .entry-title a {
-	color: #222;
+	color: #228B22;
+	font-size: 1.1em;
 	text-decoration: none;
 }
 .entry-title a:hover,
 .entry-title a:focus,
 .entry-title a:active {
-	color: #1982d1;
+  	text-decoration: underline;
 }
 .entry-meta {
 	color: #666;
@@ -766,7 +768,7 @@ a:hover {
 }
 .entry-content,
 .entry-summary {
-	padding: 1.625em 0 0;
+	padding: 0 0 0;
 }
 .entry-content h1,
 .entry-content h2,
@@ -866,7 +868,7 @@ dl.gallery-item {
 .entry-content img,
 .comment-content img,
 .widget img {
-	max-width: 100%; /* Fluid images for posts, comments, and widgets */
+	max-width: 97.5%; /* Fluid images for posts, comments, and widgets */
 }
 img[class*="align"],
 img[class*="wp-image-"],
@@ -902,7 +904,7 @@ p img,
 }
 .wp-caption img {
 	display: block;
-	margin: -2px 0 0 -2px;
+	margin: 0 auto;
 	max-width: 98%;
 }
 .wp-caption .wp-caption-text,
@@ -952,7 +954,6 @@ img[class*="wp-image-"],
 #content .gallery .gallery-icon img {/* Add fancy borders to all WordPress-added images but not things like badges and icons and the like */
 	border: 1px solid #ddd;
 	padding: 6px;
-	max-width: 97.5%;
 }
 .wp-caption img {
 	border-color: #eee;
@@ -976,14 +977,11 @@ a:active img[class*="wp-image-"],
 	border-color: #ddd;
 }
 
-/* Make sure videos and embeds fit their containers */
+/* Make sure embeds and iframes fit their containers */
 embed,
 iframe,
 object {
 	max-width: 100%;
-}
-.entry-content .twitter-tweet-rendered {
-	max-width: 100% !important; /* Override the Twitter embed fixed width */
 }
 
 /* Password Protected Posts */
@@ -1110,7 +1108,7 @@ article.format-status .entry-content {
 }
 .singular .entry-title {
 	color: #000;
-	font-size: 36px;
+	font-size: 32px;
 	font-weight: bold;
 	line-height: 48px;
 }
@@ -1136,6 +1134,7 @@ blockquote.pull {
 .pull.alignleft {
 	margin: 0 1.625em 0 0;
 	text-align: right;
+	width: 33%;
 }
 .singular .pull.alignleft {
 	margin: 0 1.625em 0 -22.25%;
@@ -1143,9 +1142,6 @@ blockquote.pull {
 .pull.alignright {
 	margin: 0 0 0 1.625em;
 	text-align: left;
-}
-blockquote.pull.alignleft,
-blockquote.pull.alignright {
 	width: 33%;
 }
 .singular .pull.alignright {
@@ -1207,7 +1203,6 @@ blockquote.pull.alignright {
 	float: left;
 	display: block;
 	margin: .375em 1.625em 0 0;
-	max-width: 100%;
 }
 
 
@@ -1258,24 +1253,15 @@ blockquote.pull.alignright {
 .indexed.format-image .entry-content {
 	padding-top: 0.5em;
 }
-.indexed.format-image .entry-content p {
-	margin: 1em 0;
-}
-.indexed.format-image .entry-content p:first-child,
-.indexed.format-image .entry-content p:first-child a,
-.indexed.format-image .entry-content p:first-child img {
-	display: block;
-	margin: 0;
-}
-.indexed.format-image .entry-content .wp-caption .wp-caption-text {
-	margin: 0;
-	padding-bottom: 1em;
+.indexed.format-image p,
+.indexed.format-image p img {
+	margin-bottom: 0;
 }
 .indexed.format-image footer.entry-meta {
 	background: #ddd;
+	margin-top: -7px;
+	padding: 20px 30px;
 	overflow: hidden;
-	padding: 4%;
-	max-width: 96%;
 }
 .indexed.format-image div.entry-meta {
 	display: inline-block;
@@ -1306,7 +1292,7 @@ blockquote.pull.alignright {
 	background: #111;
 	margin-bottom: 0;
 	max-width: 96%;
-	padding: 2% 2% 0;
+	padding: 11px;
 }
 .indexed.format-image .wp-caption .wp-caption-text {
 	color: #ddd;
@@ -1752,13 +1738,11 @@ section.recent-posts .other-recent-posts li:after {
 }
 #nav-single .nav-previous,
 #nav-single .nav-next {
+	float: none;
 	width: auto;
 }
 #nav-single .nav-next {
 	padding-left: .5em;
-}
-#nav-single .nav-previous {
-	padding-right: .5em;
 }
 
 
@@ -1769,16 +1753,12 @@ section.recent-posts .other-recent-posts li:after {
 	font-size: 12px;
 }
 .widget {
-	word-wrap: break-word;
-	-webkit-hyphens: auto;
-	-moz-hyphens: auto;
-	hyphens: auto;
 	clear: both;
 	margin: 0 0 2.2em;
 }
 .widget-title {
-	color: #666;
-	font-size: 10px;
+	color: blue;
+	font-size: 13px;
 	font-weight: 500;
 	letter-spacing: 0.1em;
 	line-height: 2.6em;
@@ -1874,8 +1854,6 @@ section.ephemera .entry-title a span {
 
 /* Widget Image */
 .widget_image img {
-	border: 0;
-	padding: 0;
 	height: auto;
 	max-width: 100%;
 }
@@ -1982,10 +1960,6 @@ section.ephemera .entry-title a span {
 }
 .commentlist .children li.comment .comment-content {
 	margin: 1.625em 0 0;
-	word-wrap: break-word;
-	-webkit-hyphens: auto;
-	-moz-hyphens: auto;
-	hyphens: auto;
 }
 .comment-meta a {
 	font-weight: bold;
@@ -2142,6 +2116,7 @@ a.comment-reply-link > span {
 	font-weight: bold;
 	left: 75%;
 	position: absolute;
+	top: 45px;
 	z-index: 1;
 }
 #respond .comment-notes,
@@ -2278,6 +2253,15 @@ p.comment-form-comment {
 	color: #555;
 	font-weight: bold;
 }
+#site-generator .sep {
+	background: url(images/wordpress.png) center left no-repeat;
+	color: transparent;
+	display: inline-block;
+	height: 16px;
+	line-height: 16px;
+	margin: 0 7px;
+	width: 16px;
+}
 
 
 /* =Responsive Structure
@@ -2394,6 +2378,7 @@ p.comment-form-comment {
 		margin-right: 0;
 		width: auto;
 	}
+
 }
 @media (max-width: 650px) {
 	/* @media (max-width: 650px) Reduce font-sizes for better readability on smaller devices */
@@ -2445,7 +2430,6 @@ p.comment-form-comment {
 	/* Floated content doesn't work well at this size */
 	.alignleft,
 	.alignright {
-		display: block;
 		float: none;
 		margin-left: 0;
 		margin-right: 0;
@@ -2495,6 +2479,7 @@ p.comment-form-comment {
 		width: 100%;
 		height: auto;
 	}
+
 }
 @media (max-width: 450px) {
 	#content .gallery-columns-2 .gallery-item {
@@ -2505,6 +2490,7 @@ p.comment-form-comment {
 		width: 100%;
 		height: auto;
 	}
+
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
 	body {
@@ -2516,11 +2502,7 @@ p.comment-form-comment {
 	#branding {
 		border-top: none;
 	}
-	.singular .entry-header .entry-meta,
-	.singular .entry-header .entry-format,
-	.singular .entry-meta .edit-link a {
-		position: static;
-	}
+
 }
 
 
@@ -2689,6 +2671,7 @@ p.comment-form-comment {
 	.commentlist .children > li.bypostauthor > article .comment-meta {
 		color: #666;
 	}
+
 }
 
 
@@ -2702,25 +2685,14 @@ p.comment-form-comment {
 	padding-right: -7.6%;
 	max-width: 1000px;
 }
-#ie7 .featured-posts {
-	margin: 0 -7.6%;
-}
-#ie7 .featured-post {
-	margin-left: 0;
-	margin-right: 0;
-	max-width: 100%;
+#ie7 section.featured-post {
+	margin-left: -7.6%;
+	margin-right: -7.6%;
+	max-width: 850px;
 }
 #ie7 section.recent-posts {
 	margin-right: 7.6%;
 }
 
+.sticky {background:  #b2ec5d; padding: 2px;}
 
-/* =IE8
------------------------------------------------ */
-
-#ie8 section.feature-image.large img {
-	width: auto;
-}
-#ie8 section.featured-post .attachment-small-feature {
-	max-width: none;
-}

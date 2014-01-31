@@ -12,6 +12,18 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
 		<?php
+		/* Decide si es EDITORIAL o no */
+		$ed = 0;
+		$posttags = get_the_tags();
+		if ($posttags) {
+			foreach($posttags as $tag) {
+			if($tag->name == ':Editorial') $ed = 1;
+			}
+		}
+if($ed) { ?> 
+<h1 style="color: green;" class="entry-title"><?php the_title(); ?></h1> 
+<?php
+} else {
 			/* Get the url from the first link in the content */
 			$content = get_the_content();
 			$ret = NULL;
@@ -24,10 +36,19 @@
 			}
 			if (!$ret){
 				echo "falta URL inicial";
-			}
-		?>
-		<h1 class="entry-title"><a href=<?php echo $ret ; ?> title="este mismo titulo" rel="bookmark"><?php the_title(); ?></a></h1>
-		<?php if ( 'post' == get_post_type() ) : ?>
+			}?> 
+<h1 class="entry-title"><a href=<?php echo $ret ; ?> title="este mismo titulo" rel="bookmark"><?php the_title(); ?></a></h1> 
+<?php
+}
+
+$etnombres = array();
+foreach($posttags as $tag) { $etnombres[] =$tag->name; };
+$etlist = implode(", ", $etnombres);
+echo "ETIQUETAS:  <font color='blue'> $etlist  </font>";
+?> <br> <?php
+echo "<font color='#095514'> Lo que sigue es sólo una introducción. Para leer el artículo original, pinche el título. </font>";
+
+		if ( 'post' == get_post_type() ) : ?><br><br>
 		<div class="entry-meta">
 			<?php twentyeleven_posted_on(); ?>
 		</div><!-- .entry-meta -->
@@ -40,7 +61,6 @@
 	</div><!-- .entry-content -->
 
 	<footer class="entry-meta">
-		<h2><?php echo "PARA PASAR AL ARTICULO ORIGINAL, PINCHE EL TITULO DE ARRIBA.";?></h2>
 		<?php   
 			/* translators: used between list items, there is a space after the comma */
 			$categories_list = get_the_category_list( __( ', ', 'twentyeleven' ) );
@@ -53,7 +73,7 @@
 				$utility_text = __( 'Este enlace no está etiquetado.', 'twentyeleven' );
 			}
 
-			printf(
+/*			printf(
 				$utility_text,
 				$categories_list,
 				$tag_list,
@@ -61,7 +81,7 @@
 				the_title_attribute( 'echo=0' ),
 				get_the_author(),
 				esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) )
-			);
+			);*/
 		?>
 		<?php edit_post_link( __( 'Edit', 'twentyeleven' ), '<span class="edit-link">', '</span>' ); ?>
 
